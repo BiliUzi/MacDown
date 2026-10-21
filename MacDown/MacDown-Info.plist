@@ -4,18 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLName</key>
-			<string>Macdown custom control</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>x-macdown</string>
-			</array>
-		</dict>
-	</array>
-
+	<key>CFBundleDisplayName</key>
+	<string>MacDown</string>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -84,16 +74,25 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>CFBundleDisplayName</key>
-	<string>MacDown</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>1.0.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>Macdown custom control</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>x-macdown</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>2000</string>
 	<key>LSApplicationCategoryType</key>
