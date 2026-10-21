@@ -1303,7 +1303,7 @@
 				GCC_PREFIX_HEADER = "MacDown/Code/MacDown-Prefix.pch";
 				INFOPLIST_FILE = "MacDown/MacDown-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "io.eldris.macdown-se";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.biliuzi.MacDown";
 				PRODUCT_NAME = MacDown;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
@@ -1322,7 +1322,7 @@
 				GCC_PREFIX_HEADER = "MacDown/Code/MacDown-Prefix.pch";
 				INFOPLIST_FILE = "MacDown/MacDown-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "io.eldris.macdown-se";
+				PRODUCT_BUNDLE_IDENTIFIER = "io.github.biliuzi.MacDown";
 				PRODUCT_NAME = MacDown;
 				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
