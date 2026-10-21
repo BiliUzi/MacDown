@@ -1,0 +1,11 @@
+.DS_Store
+build/
+DerivedData/
+Pods/
+xcuserdata/
+*.xcuserstate
+.bundle/
+vendor/bundle/
+node_modules/
+*.dmg
+*.zip
