@@ -1,0 +1,76 @@
+name: Build MacDown
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 30
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Fetch Prism dependency
+      uses: actions/checkout@v4
+      with:
+        repository: PrismJS/prism
+        ref: bd479f1d5ff0855b4c50168c1a82c91b2db191f2
+        path: Dependency/prism
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Install CocoaPods
+      run: brew list cocoapods >/dev/null 2>&1 || brew install cocoapods
+
+    - name: Install pods
+      run: pod install
+
+    - name: Generate styles and Markdown parser
+      run: |
+        npm ci --prefix Tools/GitHub-style-generator
+        make -C Tools/GitHub-style-generator
+        make -C Dependency/peg-markdown-highlight -j$(sysctl -n hw.ncpu)
+
+    - name: Build MacDown
+      run: |
+        xcodebuild \
+          -workspace MacDown.xcworkspace \
+          -scheme MacDown \
+          -configuration Release \
+          -arch arm64 \
+          -derivedDataPath build \
+          CODE_SIGNING_ALLOWED=NO \
+          build
+
+    - name: Locate built app
+      run: |
+        find build -name "MacDown.app" -type d
+
+    - name: Create DMG
+      run: |
+        hdiutil create -volname "MacDown" \
+          -srcfolder build/Build/Products/Release/MacDown.app \
+          -ov -format UDZO MacDown.dmg
+
+    - name: Archive application
+      run: ditto -c -k --sequesterRsrc --keepParent build/Build/Products/Release/MacDown.app MacDown.zip
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: MacDown-build
+        path: |
+          MacDown.zip
+          MacDown.dmg
+        if-no-files-found: error
