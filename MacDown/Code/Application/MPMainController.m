@@ -207,6 +207,7 @@ NS_INLINE void treat()
         typedef MASPreferencesWindowController WC;
         _preferencesWindowController =
             [[WC alloc] initWithViewControllers:vcs title:title];
+        _preferencesWindowController.window.toolbarStyle = NSWindowToolbarStyleExpanded;
     }
     return _preferencesWindowController;
 }
