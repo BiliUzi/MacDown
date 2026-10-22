@@ -3,6 +3,7 @@ name: Build MacDown
 on:
   push:
     branches: [ main, master ]
+    tags: [ 'v*' ]
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
@@ -74,3 +75,25 @@ jobs:
           MacDown.zip
           MacDown.dmg
         if-no-files-found: error
+
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+    - name: Download build artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: MacDown-build
+        path: dist
+
+    - name: Publish GitHub Release
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        gh release create "$GITHUB_REF_NAME" dist/MacDown.dmg dist/MacDown.zip \
+          --title "MacDown $GITHUB_REF_NAME" \
+          --generate-notes

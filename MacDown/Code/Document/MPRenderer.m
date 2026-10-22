@@ -19,13 +19,6 @@
 #import "MPAsset.h"
 #import "MPPreferences.h"
 
-// Warning: If the version of MathJax is ever updated, please check the status
-// of https://github.com/mathjax/MathJax/issues/548. If the fix has been merged
-// in to MathJax, then the WebResourceLoadDelegate can be removed from MPDocument
-// and MathJax.js can be removed from this project.
-static NSString * const kMPMathJaxCDN =
-    @"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js"
-    @"?config=TeX-AMS-MML_HTMLorMML";
 static NSString * const kMPPrismScriptDirectory = @"Prism/components";
 static NSString * const kMPPrismThemeDirectory = @"Prism/themes";
 static NSString * const kMPPrismPluginDirectory = @"Prism/plugins";
@@ -206,7 +199,6 @@ NS_INLINE BOOL MPAreNilableStringsEqual(NSString *s1, NSString *s2)
 @property (readonly) NSArray *baseStylesheets;
 @property (readonly) NSArray *prismStylesheets;
 @property (readonly) NSArray *prismScripts;
-@property (readonly) NSArray *mathjaxScripts;
 @property (readonly) NSArray *mermaidStylesheets;
 @property (readonly) NSArray *mermaidScripts;
 @property (readonly) NSArray *graphvizScripts;
@@ -419,21 +411,6 @@ NS_INLINE void MPFreeHTMLRenderer(hoedown_renderer *htmlRenderer)
     return scripts;
 }
 
-- (NSArray *)mathjaxScripts
-{
-    NSMutableArray *scripts = [NSMutableArray array];
-    NSURL *url = [NSURL URLWithString:kMPMathJaxCDN];
-    NSBundle *bundle = [NSBundle mainBundle];
-    MPEmbeddedScript *script =
-        [MPEmbeddedScript assetWithURL:[bundle URLForResource:@"init"
-                                                withExtension:@"js"
-                                                 subdirectory:@"MathJax"]
-                               andType:kMPMathJaxConfigType];
-    [scripts addObject:script];
-    [scripts addObject:[MPScript javaScriptWithURL:url]];
-    return scripts;
-}
-
 - (NSArray *)mermaidStylesheets
 {
     NSMutableArray *stylesheets = [NSMutableArray array];
@@ -525,8 +502,6 @@ NS_INLINE void MPFreeHTMLRenderer(hoedown_renderer *htmlRenderer)
             [scripts addObjectsFromArray:self.graphvizScripts];
         }
     }
-    if ([d rendererHasMathJax:self])
-        [scripts addObjectsFromArray:self.mathjaxScripts];
     return scripts;
 }
 
@@ -693,12 +668,6 @@ NS_INLINE void MPFreeHTMLRenderer(hoedown_renderer *htmlRenderer)
         }
 
     }
-    if ([self.delegate rendererHasMathJax:self])
-    {
-        scriptsOption = MPAssetEmbedded;
-        [scripts addObjectsFromArray:self.mathjaxScripts];
-    }
-
     NSString *title = [self.dataSource rendererHTMLTitle:self];
     if (!title)
         title = @"";

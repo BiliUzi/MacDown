@@ -1,102 +1,27 @@
-# 🚀 5 分钟快速开始
+# 快速开始
 
-## 第 1 步：准备 GitHub
+## 编译
 
-1. 访问 https://github.com/new
-2. 创建新仓库：
-   - 仓库名称：`macdown-custom`
-   - 选择 **Public**
-   - **Create repository**
-3. 复制你的用户名（从 GitHub 页面 URL 中或右上角账户菜单）
+推送代码后，GitHub Actions 会构建仅支持 Apple 芯片、最低 macOS 12 的 MacDown，并提供 `MacDown-build` artifact。
 
-## 第 2 步：上传代码到 GitHub
-
-在 Mac 终端运行（将 `YOUR_USERNAME` 替换为你的 GitHub 用户名）：
+正式发布时创建并推送版本标签：
 
 ```bash
-cd ~/Documents/Codex\ Claude/macdown-custom
-./PUSH_TO_GITHUB.sh YOUR_USERNAME
+git tag v1.0.0
+git push origin v1.0.0
 ```
 
-**例如：**
-```bash
-./PUSH_TO_GITHUB.sh john-doe
-```
+工作流会构建 DMG 和 ZIP，并将它们附加到 GitHub Release。把 `v1.0.0` 换成实际版本号。
 
-✅ 等待脚本完成
+## 安装
 
-## 第 3 步：等待自动编译
+从 GitHub Release 下载 `MacDown.dmg`，打开磁盘映像，再将 MacDown 拖到“应用程序”文件夹。项目当前构建未签名和公证，macOS 可能提示无法验证开发者；公开发布前应配置 Developer ID 签名与 Apple 公证。
 
-1. 打开 https://github.com/YOUR_USERNAME/macdown-custom
-2. 点击 **Actions** 标签
-3. 看到绿色 ✓ 和 "Build MacDown" 任务完成
-
-⏱️ 通常需要 10-15 分钟
-
-## 第 4 步：下载应用
-
-编译完成后：
-
-1. 在 **Actions** 页面找到最新的工作流
-2. 点击进去，向下滚动
-3. 在 **Artifacts** 部分找到 `MacDown-build`
-4. 点击下载
-
-## 第 5 步：安装和运行
+## 本地调试
 
 ```bash
-# 1. 假设下载到了 ~/Downloads
-unzip ~/Downloads/MacDown-build.zip
-
-# 2. 移到应用程序文件夹
-mv MacDown.app ~/Applications/MacDown.app
-
-# 3. 允许运行（可能需要）
-chmod +x ~/Applications/MacDown.app/Contents/MacOS/MacDown
-
-# 4. 打开应用
-open ~/Applications/MacDown.app
+pod install
+open MacDown.xcworkspace
 ```
 
-## ✅ 验证成功
-
-打开应用后查看菜单，应该没有：
-- ❌ Plug-ins 菜单
-- ❌ Help 菜单
-- ❌ Check for Updates
-
----
-
-## 🆘 遇到问题？
-
-### 脚本执行失败
-```bash
-# 确保你在正确的目录
-cd ~/Documents/Codex\ Claude/macdown-custom
-
-# 尝试手动执行
-chmod +x ./PUSH_TO_GITHUB.sh
-./PUSH_TO_GITHUB.sh YOUR_USERNAME
-```
-
-### 找不到 Actions
-- 确保代码已推送到 GitHub
-- 刷新页面
-- 可能需要等待几秒钟才会显示
-
-### 编译失败
-- 在 Actions 页面查看错误日志
-- 检查是否有红色 ✗ 标记
-- 点击工作流查看详细错误
-
-### 应用无法打开
-```bash
-# 移除安全隔离标记
-sudo xattr -rd com.apple.quarantine ~/Applications/MacDown.app
-```
-
----
-
-**就这么简单！** 如有问题随时问我。
-
-还需要什么帮助吗？
+完整构建步骤见 [BUILD_INSTRUCTIONS.md](BUILD_INSTRUCTIONS.md)。

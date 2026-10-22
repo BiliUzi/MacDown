@@ -4,12 +4,6 @@
 /* Class = "NSSegmentedCell"; 0rH-I9-Dxr.ibShadowedLabels[1] = "Reload"; ObjectID = "0rH-I9-Dxr"; */
 "0rH-I9-Dxr.ibShadowedLabels[1]" = "重新载入";
 
-/* Class = "NSTextFieldCell"; title = "Math support requires Internet connection."; ObjectID = "5Ch-dG-juL"; */
-"5Ch-dG-juL.title" = "数学支持需要网络连接。";
-
-/* Class = "NSButtonCell"; title = "TeX-like math syntax"; ObjectID = "6vg-3f-KWk"; */
-"6vg-3f-KWk.title" = "类 TeX 数学语法";
-
 /* Class = "NSTextFieldCell"; title = "CSS:"; ObjectID = "9I3-I7-HLu"; */
 "9I3-I7-HLu.title" = "CSS:";
 
@@ -27,9 +21,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Default path:"; ObjectID = "e1A-Mm-svq"; */
 "e1A-Mm-svq.title" = "默认路径：";
-
-/* Class = "NSButtonCell"; title = "Use dollar sign ($) as inline delimiter"; ObjectID = "GF9-Dm-IoB"; */
-"GF9-Dm-IoB.title" = "使用美元符号（$）作为行内分隔符";
 
 /* Class = "NSButtonCell"; title = "Detect Jekyll front-matter"; ObjectID = "iXi-Pv-mFl"; */
 "iXi-Pv-mFl.title" = "检测 Jekyll 头部参数";

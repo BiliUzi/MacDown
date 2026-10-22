@@ -14,7 +14,6 @@
 NSString * const kMPPlainType = @"text/plain";
 NSString * const kMPCSSType = @"text/css";
 NSString * const kMPJavaScriptType = @"text/javascript";
-NSString * const kMPMathJaxConfigType = @"text/x-mathjax-config";
 
 
 @interface MPAsset ()
@@ -68,6 +67,9 @@ NSString * const kMPMathJaxConfigType = @"text/x-mathjax-config";
 
 - (NSString *)htmlForOption:(MPAssetOption)option
 {
+    if (!self.url.isFileURL)
+        return nil;
+
     NSMutableDictionary *context =
         [NSMutableDictionary dictionaryWithObject:self.typeName
                                            forKey:@"typeName"];
@@ -84,7 +86,6 @@ NSString * const kMPMathJaxConfigType = @"text/x-mathjax-config";
                 context[@"content"] = content;
                 break;
             }
-            // Non-file URLs fallthrough to be treated as full links.
         case MPAssetFullLink:
             context[@"url"] = self.url.absoluteString;
             break;
@@ -129,7 +130,6 @@ NSString * const kMPMathJaxConfigType = @"text/x-mathjax-config";
                             @"{{{ content }}}\n</style>");
                 break;
             }
-            // Non-file URLs fallthrough to be treated as full links.
         case MPAssetFullLink:
             template = (@"<link rel=\"stylesheet\" type=\"{{ typeName }}\" "
                         @"href=\"{{ url }}\">");

@@ -136,35 +136,6 @@
                         <binding destination="-2" name="value" keyPath="self.preferences.htmlMermaid" id="0Vt-zm-bOO"/>
                     </connections>
                 </button>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="5mI-gS-xH9">
-                    <rect key="frame" x="106" y="197" width="281" height="18"/>
-                    <buttonCell key="cell" type="check" title="TeX-like math syntax" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6vg-3f-KWk">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="-2" name="value" keyPath="self.preferences.htmlMathJax" id="5XK-Jc-sXV"/>
-                    </connections>
-                </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HzY-ws-XRq">
-                    <rect key="frame" x="128" y="157" width="259" height="14"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Math support requires Internet connection." id="5Ch-dG-juL">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button translatesAutoresizingMaskIntoConstraints="NO" id="u5h-MS-cR3">
-                    <rect key="frame" x="127" y="176" width="260" height="18"/>
-                    <buttonCell key="cell" type="check" title="Use dollar sign ($) as inline delimiter" bezelStyle="regularSquare" imagePosition="left" controlSize="small" state="on" inset="2" id="GF9-Dm-IoB">
-                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
-                    </buttonCell>
-                    <connections>
-                        <binding destination="-2" name="enabled" keyPath="self.preferences.htmlMathJax" id="g8D-bh-dNR"/>
-                        <binding destination="-2" name="value" keyPath="self.preferences.htmlMathJaxInlineDollar" id="wa6-Ue-wPT"/>
-                    </connections>
-                </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="P7Z-ag-nPR">
                     <rect key="frame" x="106" y="133" width="281" height="18"/>
                     <buttonCell key="cell" type="check" title="Task list syntax" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="kBf-iW-HlH">
@@ -245,13 +216,10 @@
             </subviews>
             <constraints>
                 <constraint firstItem="lxX-Pm-dhn" firstAttribute="leading" secondItem="RCL-iK-kgx" secondAttribute="leading" id="0LF-WD-jr9"/>
-                <constraint firstItem="RCL-iK-kgx" firstAttribute="trailing" secondItem="5mI-gS-xH9" secondAttribute="trailing" id="2Au-ZO-sN1"/>
                 <constraint firstItem="ysT-Br-eSf" firstAttribute="trailing" secondItem="Zna-RM-nBO" secondAttribute="trailing" id="2Dv-QD-tU1"/>
                 <constraint firstItem="vVI-g8-EhH" firstAttribute="trailing" secondItem="Dd4-T9-cLi" secondAttribute="trailing" id="3CP-t8-TSZ"/>
                 <constraint firstItem="vVI-g8-EhH" firstAttribute="leading" secondItem="Zna-RM-nBO" secondAttribute="leading" id="3e9-8I-C7O"/>
-                <constraint firstItem="5mI-gS-xH9" firstAttribute="top" secondItem="ysT-Br-eSf" secondAttribute="bottom" constant="11" id="4eS-8i-EmI"/>
                 <constraint firstItem="2I4-c8-jan" firstAttribute="leading" secondItem="M0W-YD-Ouk" secondAttribute="leading" id="8Mw-X4-Li9"/>
-                <constraint firstItem="u5h-MS-cR3" firstAttribute="trailing" secondItem="5mI-gS-xH9" secondAttribute="trailing" id="9cD-Rw-29O"/>
                 <constraint firstAttribute="trailing" secondItem="bih-Hu-dSj" secondAttribute="trailing" constant="20" id="9gU-rZ-Jh2"/>
                 <constraint firstItem="6BB-rh-ZwZ" firstAttribute="trailing" secondItem="RCL-iK-kgx" secondAttribute="trailing" id="ASs-te-jBE"/>
                 <constraint firstItem="RCL-iK-kgx" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="108" id="CtD-Eh-Skz"/>
@@ -260,7 +228,6 @@
                 <constraint firstItem="f62-wu-Z6p" firstAttribute="top" secondItem="RCL-iK-kgx" secondAttribute="bottom" constant="18" id="Efm-pX-TpX"/>
                 <constraint firstItem="bih-Hu-dSj" firstAttribute="centerY" secondItem="f62-wu-Z6p" secondAttribute="centerY" id="G5f-va-qLZ"/>
                 <constraint firstItem="2I4-c8-jan" firstAttribute="leading" secondItem="Dd4-T9-cLi" secondAttribute="trailing" constant="8" id="Gsh-B6-5di"/>
-                <constraint firstItem="HzY-ws-XRq" firstAttribute="top" secondItem="u5h-MS-cR3" secondAttribute="bottom" constant="8" id="HPL-dT-fDu"/>
                 <constraint firstItem="M0W-YD-Ouk" firstAttribute="top" secondItem="2I4-c8-jan" secondAttribute="bottom" constant="9" id="I3l-Fb-wX6"/>
                 <constraint firstItem="RCL-iK-kgx" firstAttribute="top" secondItem="lxX-Pm-dhn" secondAttribute="bottom" constant="6" id="IMk-Bn-BvA"/>
                 <constraint firstItem="ysT-Br-eSf" firstAttribute="leading" secondItem="Zna-RM-nBO" secondAttribute="leading" constant="22" id="IRH-Nz-63Z"/>
@@ -276,28 +243,25 @@
                 <constraint firstItem="6BB-rh-ZwZ" firstAttribute="top" secondItem="hfI-Rf-3Cr" secondAttribute="bottom" constant="6" id="SAM-fN-Kr3"/>
                 <constraint firstItem="Zna-RM-nBO" firstAttribute="trailing" secondItem="RCL-iK-kgx" secondAttribute="trailing" id="SMv-cO-fbm"/>
                 <constraint firstItem="Wgm-Sy-7mr" firstAttribute="centerY" secondItem="0ez-nk-c3q" secondAttribute="centerY" id="WPn-24-Lkv"/>
-                <constraint firstItem="HzY-ws-XRq" firstAttribute="leading" secondItem="u5h-MS-cR3" secondAttribute="leading" id="WYo-lJ-dlX"/>
                 <constraint firstItem="RCL-iK-kgx" firstAttribute="leading" secondItem="P7Z-ag-nPR" secondAttribute="leading" id="Wzg-eU-qko"/>
                 <constraint firstItem="lxX-Pm-dhn" firstAttribute="trailing" secondItem="RCL-iK-kgx" secondAttribute="trailing" id="aU1-Lx-0W1"/>
                 <constraint firstItem="vVI-g8-EhH" firstAttribute="centerY" secondItem="M0W-YD-Ouk" secondAttribute="centerY" id="bnP-5M-kyi"/>
                 <constraint firstItem="bih-Hu-dSj" firstAttribute="leading" secondItem="f62-wu-Z6p" secondAttribute="trailing" constant="8" id="ejW-lN-d1f"/>
                 <constraint firstItem="0ez-nk-c3q" firstAttribute="trailing" secondItem="f62-wu-Z6p" secondAttribute="trailing" id="fLc-Tu-YjS"/>
-                <constraint firstItem="RCL-iK-kgx" firstAttribute="leading" secondItem="5mI-gS-xH9" secondAttribute="leading" id="fcQ-VR-b98"/>
                 <constraint firstItem="f62-wu-Z6p" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="fpW-YQ-VfI"/>
                 <constraint firstItem="hfI-Rf-3Cr" firstAttribute="trailing" secondItem="RCL-iK-kgx" secondAttribute="trailing" id="hTq-GU-Cn7"/>
                 <constraint firstAttribute="trailing" secondItem="IJe-cc-YKn" secondAttribute="trailing" constant="20" id="jdl-N4-ZUR"/>
                 <constraint firstItem="Wgm-Sy-7mr" firstAttribute="leading" secondItem="0ez-nk-c3q" secondAttribute="trailing" constant="8" id="lcT-fb-QYr"/>
                 <constraint firstItem="Wgm-Sy-7mr" firstAttribute="centerY" secondItem="IJe-cc-YKn" secondAttribute="centerY" id="mIv-U4-qfm"/>
                 <constraint firstItem="IJe-cc-YKn" firstAttribute="leading" secondItem="Wgm-Sy-7mr" secondAttribute="trailing" constant="8" id="nyg-Iu-IrQ"/>
-                <constraint firstItem="P7Z-ag-nPR" firstAttribute="top" secondItem="HzY-ws-XRq" secondAttribute="bottom" constant="8" id="q6m-Qx-ZWn"/>
-                <constraint firstItem="HzY-ws-XRq" firstAttribute="trailing" secondItem="u5h-MS-cR3" secondAttribute="trailing" id="r9G-Y7-wRq"/>
+                <constraint firstItem="P7Z-ag-nPR" firstAttribute="top" secondItem="ysT-Br-eSf" secondAttribute="bottom" constant="11" id="q6m-Qx-ZWn"/>
                 <constraint firstItem="0ez-nk-c3q" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="22" id="s6P-0T-Rbv"/>
                 <constraint firstItem="RCL-iK-kgx" firstAttribute="trailing" secondItem="P7Z-ag-nPR" secondAttribute="trailing" id="sJX-lU-vtN"/>
                 <constraint firstItem="2I4-c8-jan" firstAttribute="centerY" secondItem="Dd4-T9-cLi" secondAttribute="centerY" id="sZr-Uf-qAE"/>
                 <constraint firstItem="2I4-c8-jan" firstAttribute="trailing" secondItem="Zna-RM-nBO" secondAttribute="trailing" id="vP3-IV-zCA"/>
                 <constraint firstItem="lxX-Pm-dhn" firstAttribute="top" secondItem="6BB-rh-ZwZ" secondAttribute="bottom" constant="6" id="vhB-Js-Nn0"/>
                 <constraint firstItem="ysT-Br-eSf" firstAttribute="top" secondItem="M0W-YD-Ouk" secondAttribute="bottom" constant="8" id="ynM-S2-BhS"/>
-                <constraint firstItem="2I4-c8-jan" firstAttribute="top" secondItem="Zna-RM-nBO" secondAttribute="bottom" constant="8" id="ywP-o9-FOM"/>
+                <constraint firstItem="2I4-c8-jan" firstAttribute="top" secondItem="Zna-RM-nBO" secondAttribute="bottom" constant="14" id="ywP-o9-FOM"/>
                 <constraint firstItem="hfI-Rf-3Cr" firstAttribute="leading" secondItem="RCL-iK-kgx" secondAttribute="leading" id="zdZ-q9-Rav"/>
             </constraints>
             <point key="canvasLocation" x="178.5" y="463.5"/>

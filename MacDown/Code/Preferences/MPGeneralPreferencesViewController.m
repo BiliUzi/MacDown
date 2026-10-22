@@ -10,11 +10,6 @@
 #import "MPPreferences.h"
 
 
-@interface MPGeneralPreferencesViewController ()
-@property (weak) IBOutlet NSButton *autoRenderingToggle;
-@end
-
-
 @implementation MPGeneralPreferencesViewController
 
 #pragma mark - MASPreferencesViewController
@@ -34,16 +29,5 @@
     return NSLocalizedString(@"General", @"Preference pane title.");
 }
 
-
-#pragma mark - IBAction
-
-- (IBAction)updateWordCounterVisibility:(id)sender
-{
-    if (sender == self.autoRenderingToggle)
-    {
-        if (self.autoRenderingToggle.state != NSOnState)
-            self.preferences.editorShowWordCount = NO;
-    }
-}
 
 @end

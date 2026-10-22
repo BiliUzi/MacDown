@@ -27,7 +27,6 @@
 #import "MPPreferencesViewController.h"
 #import "MPEditorPreferencesViewController.h"
 #import "MPExportPanelAccessoryViewController.h"
-#import "MPMathJaxListener.h"
 #import "WebView+WebViewPrivateHeaders.h"
 #import "MPToolbarController.h"
 #import <JavaScriptCore/JavaScriptCore.h>
@@ -141,10 +140,6 @@ NS_INLINE NSColor *MPGetWebViewBackgroundColor(WebView *webview)
         flags |= HOEDOWN_EXT_SUPERSCRIPT;
     if (self.extensionTables)
         flags |= HOEDOWN_EXT_TABLES;
-    if (self.htmlMathJax)
-        flags |= HOEDOWN_EXT_MATH;
-    if (self.htmlMathJaxInlineDollar)
-        flags |= HOEDOWN_EXT_MATH_EXPLICIT;
     return flags;
 }
 
@@ -835,23 +830,6 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
 }
 
 
-#pragma mark - WebResourceLoadDelegate
-
-- (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource
-{
-    
-    if ([[request.URL lastPathComponent] isEqualToString:@"MathJax.js"])
-    {
-        NSURLComponents *origComps = [NSURLComponents componentsWithURL:[request URL] resolvingAgainstBaseURL:YES];
-        NSURLComponents *updatedComps = [NSURLComponents componentsWithURL:[[NSBundle mainBundle] URLForResource:@"MathJax" withExtension:@"js" subdirectory:@"MathJax"] resolvingAgainstBaseURL:NO];
-        [updatedComps setQueryItems:[origComps queryItems]];
-        
-        request = [NSURLRequest requestWithURL:[updatedComps URL]];
-    }
-    
-    return request;
-}
-
 #pragma mark - WebFrameLoadDelegate
 
 - (void)webView:(WebView *)sender didCommitLoadForFrame:(WebFrame *)frame
@@ -862,27 +840,13 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
             [window disableFlushWindow];
     }
 
-    // If MathJax is off, the on-completion callback will be invoked directly
-    // when loading is done (in -webView:didFinishLoadForFrame:).
-    if (self.preferences.htmlMathJax)
-    {
-        MPMathJaxListener *listener = [[MPMathJaxListener alloc] init];
-        [listener addCallback:MPGetPreviewLoadingCompletionHandler(self)
-                       forKey:@"End"];
-        [sender.windowScriptObject setValue:listener forKey:@"MathJaxListener"];
-    }
 }
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-    // If MathJax is on, the on-completion callback will be invoked by the
-    // JavaScript handler injected in -webView:didCommitLoadForFrame:.
-    if (!self.preferences.htmlMathJax)
-    {
-        id callback = MPGetPreviewLoadingCompletionHandler(self);
-        NSOperationQueue *queue = [NSOperationQueue mainQueue];
-        [queue addOperationWithBlock:callback];
-    }
+    id callback = MPGetPreviewLoadingCompletionHandler(self);
+    NSOperationQueue *queue = [NSOperationQueue mainQueue];
+    [queue addOperationWithBlock:callback];
 
     self.isPreviewReady = YES;
 
@@ -922,6 +886,13 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
     switch ([information[WebActionNavigationTypeKey] integerValue])
     {
         case WebNavigationTypeLinkClicked:
+            // Keep preview navigation local; never hand remote URLs to the
+            // system browser from the document preview.
+            if (!request.URL.isFileURL)
+            {
+                [listener ignore];
+                return;
+            }
             // If the target is exactly as the current one, ignore.
             if ([self.currentBaseUrl isEqual:request.URL])
             {
@@ -941,6 +912,19 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
             break;
     }
     [listener use];
+}
+
+#pragma mark - WebResourceLoadDelegate
+
+- (NSURLRequest *)webView:(WebView *)sender
+                 resource:(id)identifier
+          willSendRequest:(NSURLRequest *)request
+         redirectResponse:(NSURLResponse *)redirectResponse
+             fromDataSource:(WebDataSource *)dataSource
+{
+    // Markdown previews can load local assets, but must not fetch remote
+    // images, stylesheets, scripts, or other resources.
+    return request.URL.isFileURL ? request : nil;
 }
 
 
@@ -1036,11 +1020,6 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
     return self.preferences.htmlCodeBlockAccessory;
 }
 
-- (BOOL)rendererHasMathJax:(MPRenderer *)renderer
-{
-    return self.preferences.htmlMathJax;
-}
-
 - (NSString *)rendererHighlightingThemeName:(MPRenderer *)renderer
 {
     return self.preferences.htmlHighlightingThemeName;
@@ -1076,7 +1055,7 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
 
 #if 0
     // Unfortunately this DOM-replacing causes a lot of problems...
-    // 1. MathJax needs to be triggered.
+    // 1. JavaScript rendering needs to be triggered.
     // 2. Prism rendering is lost.
     // 3. Potentially more.
     // Essentially all JavaScript needs to be run again after we replace
