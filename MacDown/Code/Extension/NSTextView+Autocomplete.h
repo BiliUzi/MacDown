@@ -14,15 +14,13 @@
                   suffix:(NSString *)suffix;
 - (void)insertSpacesForTab;
 - (BOOL)completeMatchingCharactersForTextInRange:(NSRange)range
-                                      withString:(NSString *)str
-                            strikethroughEnabled:(BOOL)strikethrough;
+                                      withString:(NSString *)str;
 - (BOOL)completeMatchingCharacterForText:(NSString *)string
                               atLocation:(NSUInteger)location;
 - (void)wrapTextInRange:(NSRange)range withPrefix:(unichar)prefix
                  suffix:(unichar)suffix;
 - (BOOL)wrapMatchingCharactersOfCharacter:(unichar)character
-                        aroundTextInRange:(NSRange)range
-                     strikethroughEnabled:(BOOL)isStrikethroughEnabled;
+                        aroundTextInRange:(NSRange)range;
 - (BOOL)deleteMatchingCharactersAround:(NSUInteger)location;
 - (BOOL)unindentForSpacesBefore:(NSUInteger)location;
 - (BOOL)toggleForMarkupPrefix:(NSString *)prefix suffix:(NSString *)suffix;

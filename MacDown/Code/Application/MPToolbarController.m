@@ -60,8 +60,7 @@ static CGFloat itemWidth = 37;
         ],
         [self toolbarItemGroupWithIdentifier:@"text-formatting-group" separated:NO label:NSLocalizedString(@"Text Styles", @"") items:@[
             [self toolbarItemWithIdentifier:@"bold" label:NSLocalizedString(@"Strong", @"Strong toolbar button") icon:@"ToolbarIconBold" action:@selector(toggleStrong:)],
-            [self toolbarItemWithIdentifier:@"italic" label:NSLocalizedString(@"Emphasize", @"Emphasize toolbar button") icon:@"ToolbarIconItalic" action:@selector(toggleEmphasis:)],
-            [self toolbarItemWithIdentifier:@"underline" label:NSLocalizedString(@"Underline", @"Underline toolbar button") icon:@"ToolbarIconUnderlined" action:@selector(toggleUnderline:)]
+            [self toolbarItemWithIdentifier:@"italic" label:NSLocalizedString(@"Emphasize", @"Emphasize toolbar button") icon:@"ToolbarIconItalic" action:@selector(toggleEmphasis:)]
             ]
          ],
         [self toolbarItemGroupWithIdentifier:@"heading-group" separated:NO label:NSLocalizedString(@"Headings", @"") items:@[
@@ -80,9 +79,6 @@ static CGFloat itemWidth = 37;
         [self toolbarItemWithIdentifier:@"link" label:NSLocalizedString(@"Link", @"Link toolbar button") icon:@"ToolbarIconLink" action:@selector(toggleLink:)],
         [self toolbarItemWithIdentifier:@"image" label:NSLocalizedString(@"Image", @"Image toolbar button") icon:@"ToolbarIconImage" action:@selector(toggleImage:)],
         [self toolbarItemWithIdentifier:@"copy-html" label:NSLocalizedString(@"Copy HTML", @"Copy HTML toolbar button") icon:@"ToolbarIconCopyHTML" action:@selector(copyHtml:)],
-        [self toolbarItemWithIdentifier:@"comment" label:NSLocalizedString(@"Comment", @"Comment toolbar button") icon:@"ToolbarIconComment" action:@selector(toggleComment:)],
-        [self toolbarItemWithIdentifier:@"highlight" label:NSLocalizedString(@"Highlight", @"Highlight toolbar button") icon:@"ToolbarIconHighlight" action:@selector(toggleHighlight:)],
-        [self toolbarItemWithIdentifier:@"strikethrough" label:NSLocalizedString(@"Strikethrough", @"Strikethrough toolbar button") icon:@"ToolbarIconStrikethrough" action:@selector(toggleStrikethrough:)],
         [self toolbarItemDropDownWithIdentifier:@"layout" label:NSLocalizedString(@"Layout", @"Layout toolbar button") icon:@"ToolbarIconEditorAndPreview" menuItems:
             @[
               toggleEditorMenuItem, togglePreviewMenuItem
@@ -129,19 +125,12 @@ static CGFloat itemWidth = 37;
     
     // Add space after the specified toolbar item indices
     NSSet<NSNumber *> *spaceIndices = [NSSet set];
-    NSSet<NSNumber *> *flexibleSpaceIndices = [NSSet setWithObjects:@2, @3, @5, @7, @11, nil];
+    NSSet<NSNumber *> *flexibleSpaceIndices = [NSSet setWithObjects:@2, @3, @5, @7, nil];
     NSUInteger i = 0;
     
     for (NSString *itemIdentifier in orderedToolbarItemIdentifiers)
     {
-        // exclude some toolbar items from the default toolbar
-        if ([itemIdentifier  isEqual: @"comment"]
-            || [itemIdentifier  isEqual: @"highlight"]
-            || [itemIdentifier  isEqual: @"strikethrough"]) {
-            // do nothing here
-        }else {
-            [defaultItemIdentifiers addObject:itemIdentifier];
-        }
+        [defaultItemIdentifiers addObject:itemIdentifier];
         
         if ([spaceIndices containsObject:@(i)])
         {
@@ -193,7 +182,6 @@ static CGFloat itemWidth = 37;
     NSToolbarItemGroup *itemGroup = [[NSToolbarItemGroup alloc] initWithItemIdentifier:itemIdentifier];
     itemGroup.subitems = items;
     itemGroup.label = label;
-    itemGroup.paletteLabel = label;
     
     CGFloat itemGroupWidth = itemWidth * items.count;
     
@@ -233,7 +221,6 @@ static CGFloat itemWidth = 37;
 - (NSToolbarItem *)toolbarItemWithIdentifier:(NSString *)itemIdentifier label:(NSString *)label icon:(NSString *)iconImageName action:(SEL)action {
     NSToolbarItem *toolbarItem = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
     toolbarItem.label = label;
-    toolbarItem.paletteLabel = label;
     toolbarItem.toolTip = label;
     
     NSImage *itemImage = [NSImage imageNamed:iconImageName];
@@ -260,7 +247,6 @@ static CGFloat itemWidth = 37;
 - (NSToolbarItem *)toolbarItemDropDownWithIdentifier:(NSString *)itemIdentifier label:(NSString *)label icon:(NSString *)iconImageName menuItems:(NSArray <NSMenuItem *>*)menuItems {
     NSToolbarItem *toolbarItem = [[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier];
     toolbarItem.label = label;
-    toolbarItem.paletteLabel = label;
     toolbarItem.toolTip = label;
     
     NSImage *itemImage = [NSImage imageNamed:iconImageName];

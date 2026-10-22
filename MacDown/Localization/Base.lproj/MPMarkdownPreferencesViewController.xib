@@ -59,33 +59,13 @@
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 </box>
                 <box autoresizesSubviews="YES" title="Inline formatting" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="Ycc-Px-jbu">
-                    <rect key="frame" x="200" y="16" width="183" height="194"/>
+                    <rect key="frame" x="200" y="76" width="183" height="134"/>
                     <view key="contentView">
-                        <rect key="frame" x="1" y="1" width="181" height="178"/>
+                        <rect key="frame" x="1" y="1" width="181" height="118"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="iwB-ah-rER">
-                                <rect key="frame" x="16" y="132" width="149" height="18"/>
-                                <buttonCell key="cell" type="check" title="Strikethrough" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="RjP-zE-c6b">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <binding destination="-2" name="value" keyPath="self.preferences.extensionStrikethough" id="tWe-ZX-b8J"/>
-                                </connections>
-                            </button>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="CCI-wC-lHw">
-                                <rect key="frame" x="16" y="112" width="149" height="18"/>
-                                <buttonCell key="cell" type="check" title="Underline" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Gdr-Ro-ZnW">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <binding destination="-2" name="value" keyPath="self.preferences.extensionUnderline" id="hZM-bR-fRh"/>
-                                </connections>
-                            </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="gtf-xR-sKM">
-                                <rect key="frame" x="16" y="92" width="149" height="18"/>
+                                <rect key="frame" x="16" y="72" width="149" height="18"/>
                                 <buttonCell key="cell" type="check" title="Quote" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2lB-hq-5eX">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -95,7 +75,7 @@
                                 </connections>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="tqY-25-uOh">
-                                <rect key="frame" x="16" y="152" width="149" height="18"/>
+                                <rect key="frame" x="16" y="92" width="149" height="18"/>
                                 <buttonCell key="cell" type="check" title="Intra-word emphasis" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="D7l-nP-P0y">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -112,16 +92,6 @@
                                 </buttonCell>
                                 <connections>
                                     <binding destination="-2" name="value" keyPath="self.preferences.extensionSuperscript" id="Tmn-Ka-4yY"/>
-                                </connections>
-                            </button>
-                            <button translatesAutoresizingMaskIntoConstraints="NO" id="QMR-TV-GNi">
-                                <rect key="frame" x="16" y="72" width="149" height="18"/>
-                                <buttonCell key="cell" type="check" title="Highlight" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8kI-gm-5Lo">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <binding destination="-2" name="value" keyPath="self.preferences.extensionHighlight" id="Yo5-uZ-gty"/>
                                 </connections>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="T31-Sx-beD">
@@ -147,31 +117,22 @@
                         </subviews>
                     </view>
                     <constraints>
-                        <constraint firstItem="tqY-25-uOh" firstAttribute="width" secondItem="QMR-TV-GNi" secondAttribute="width" id="3dX-gu-pDA"/>
                         <constraint firstItem="tqY-25-uOh" firstAttribute="width" secondItem="gtf-xR-sKM" secondAttribute="width" id="6Rd-ZM-kFZ"/>
                         <constraint firstItem="tqY-25-uOh" firstAttribute="width" secondItem="T31-Sx-beD" secondAttribute="width" id="793-kg-eP4"/>
                         <constraint firstItem="tqY-25-uOh" firstAttribute="leading" secondItem="gtf-xR-sKM" secondAttribute="leading" id="7G3-fv-Bwg"/>
-                        <constraint firstItem="gtf-xR-sKM" firstAttribute="top" secondItem="CCI-wC-lHw" secondAttribute="bottom" constant="6" id="ENl-He-M1e"/>
+                        <constraint firstItem="gtf-xR-sKM" firstAttribute="top" secondItem="tqY-25-uOh" secondAttribute="bottom" constant="6" id="ENl-He-M1e"/>
                         <constraint firstAttribute="trailing" secondItem="tqY-25-uOh" secondAttribute="trailing" constant="16" id="IBy-ZL-0VX"/>
                         <constraint firstItem="tqY-25-uOh" firstAttribute="leading" secondItem="Ycc-Px-jbu" secondAttribute="leading" constant="16" id="JML-J3-nyi"/>
-                        <constraint firstItem="iwB-ah-rER" firstAttribute="top" secondItem="tqY-25-uOh" secondAttribute="bottom" constant="6" id="JaZ-rX-DQh"/>
                         <constraint firstAttribute="bottom" secondItem="Y8p-KQ-Vis" secondAttribute="bottom" constant="11" id="JtX-0K-G8t"/>
-                        <constraint firstItem="lYF-J6-3YU" firstAttribute="top" secondItem="QMR-TV-GNi" secondAttribute="bottom" constant="6" id="KvZ-Uz-Q9R"/>
-                        <constraint firstItem="CCI-wC-lHw" firstAttribute="top" secondItem="iwB-ah-rER" secondAttribute="bottom" constant="6" id="NdM-5P-atE"/>
+                        <constraint firstItem="lYF-J6-3YU" firstAttribute="top" secondItem="gtf-xR-sKM" secondAttribute="bottom" constant="6" id="KvZ-Uz-Q9R"/>
                         <constraint firstItem="tqY-25-uOh" firstAttribute="width" secondItem="lYF-J6-3YU" secondAttribute="width" id="Ngh-78-6G6"/>
                         <constraint firstItem="tqY-25-uOh" firstAttribute="top" secondItem="Ycc-Px-jbu" secondAttribute="top" constant="11" id="WfH-CD-pNO"/>
-                        <constraint firstItem="tqY-25-uOh" firstAttribute="width" secondItem="iwB-ah-rER" secondAttribute="width" id="b6r-9U-Ka5"/>
-                        <constraint firstItem="tqY-25-uOh" firstAttribute="leading" secondItem="CCI-wC-lHw" secondAttribute="leading" id="bXa-Ro-SyE"/>
                         <constraint firstItem="tqY-25-uOh" firstAttribute="leading" secondItem="lYF-J6-3YU" secondAttribute="leading" id="bfe-nk-zKL"/>
-                        <constraint firstItem="QMR-TV-GNi" firstAttribute="top" secondItem="gtf-xR-sKM" secondAttribute="bottom" constant="6" id="mqF-rq-2sm"/>
                         <constraint firstItem="tqY-25-uOh" firstAttribute="leading" secondItem="Y8p-KQ-Vis" secondAttribute="leading" id="nV1-bH-j5P"/>
                         <constraint firstItem="tqY-25-uOh" firstAttribute="width" secondItem="Y8p-KQ-Vis" secondAttribute="width" id="oA4-JX-AZO"/>
-                        <constraint firstItem="tqY-25-uOh" firstAttribute="width" secondItem="CCI-wC-lHw" secondAttribute="width" id="phQ-Cl-2Wb"/>
                         <constraint firstItem="tqY-25-uOh" firstAttribute="leading" secondItem="T31-Sx-beD" secondAttribute="leading" id="qPH-8x-0yD"/>
                         <constraint firstItem="Y8p-KQ-Vis" firstAttribute="top" secondItem="T31-Sx-beD" secondAttribute="bottom" constant="6" id="qca-bh-fV2"/>
                         <constraint firstItem="T31-Sx-beD" firstAttribute="top" secondItem="lYF-J6-3YU" secondAttribute="bottom" constant="6" id="sa2-1e-2Xh"/>
-                        <constraint firstItem="tqY-25-uOh" firstAttribute="leading" secondItem="QMR-TV-GNi" secondAttribute="leading" id="sgT-GA-YPl"/>
-                        <constraint firstItem="tqY-25-uOh" firstAttribute="leading" secondItem="iwB-ah-rER" secondAttribute="leading" id="vpS-tR-3bY"/>
                     </constraints>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                     <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

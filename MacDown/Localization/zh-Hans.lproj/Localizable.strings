@@ -13,9 +13,6 @@
 /* (No Comment) */
 "CHARACTERS_PLURAL_STRING" = "%@ 个字符;%@ 个字符";
 
-/* Comment toolbar button */
-"Comment" = "注释";
-
 /* Copy HTML toolbar button */
 "Copy HTML" = "拷贝 HTML 代码";
 
@@ -48,9 +45,6 @@
 
 /* Toggle reveal toolbar */
 "Hide Toolbar" = "隐藏工具栏";
-
-/* Highlight toolbar button */
-"Highlight" = "高亮";
 
 /* Image toolbar button */
 "Image" = "图片";
@@ -113,9 +107,6 @@
 /* Toggle reveal toolbar */
 "Show Toolbar" = "显示工具栏";
 
-/* Strikethrough toolbar button */
-"Strikethrough" = "删除线";
-
 /* Strong toolbar button */
 "Strong" = "强调";
 
@@ -124,9 +115,6 @@
 
 /* No comment provided by engineer. */
 "Text Styles" = "文本样式";
-
-/* Underline toolbar button */
-"Underline" = "下划线";
 
 /* Uninstall shell utility button */
 "Uninstall" = "卸载";

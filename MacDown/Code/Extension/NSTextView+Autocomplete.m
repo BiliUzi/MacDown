@@ -43,10 +43,8 @@ static const unichar kMPMatchingCharactersMap[][2] = {
     {L'\0', L'\0'},
 };
 
-static const unichar kMPStrikethroughCharacter = L'~';
-
 static const unichar kMPMarkupCharacters[] = {
-    L'*', L'_', L'`', L'=', L'\0',
+    L'*', L'_', L'`', L'\0',
 };
 
 static NSString * const kMPListLineHeadPattern =
@@ -98,7 +96,6 @@ static NSString * const kMPBlockquoteLinePattern = @"^((?:\\> ?)+).*$";
 
 - (BOOL)completeMatchingCharactersForTextInRange:(NSRange)range
                                       withString:(NSString *)str
-                            strikethroughEnabled:(BOOL)strikethrough
 {
     NSUInteger stringLength = str.length;
 
@@ -115,8 +112,7 @@ static NSString * const kMPBlockquoteLinePattern = @"^((?:\\> ?)+).*$";
     {
         unichar character = [str characterAtIndex:0];
         if ([self wrapMatchingCharactersOfCharacter:character
-                                  aroundTextInRange:range
-                               strikethroughEnabled:strikethrough])
+                                  aroundTextInRange:range])
             return YES;
     }
     return NO;
@@ -207,7 +203,6 @@ static NSString * const kMPBlockquoteLinePattern = @"^((?:\\> ?)+).*$";
 
 - (BOOL)wrapMatchingCharactersOfCharacter:(unichar)character
                         aroundTextInRange:(NSRange)range
-                     strikethroughEnabled:(BOOL)isStrikethroughEnabled
 {
     for (const unichar *cs = kMPMatchingCharactersMap[0]; *cs != 0; cs += 2)
     {
@@ -224,11 +219,6 @@ static NSString * const kMPBlockquoteLinePattern = @"^((?:\\> ?)+).*$";
             [self wrapTextInRange:range withPrefix:character suffix:character];
             return YES;
         }
-    }
-    if (isStrikethroughEnabled && character == kMPStrikethroughCharacter)
-    {
-        [self wrapTextInRange:range withPrefix:character suffix:character];
-        return YES;
     }
     return NO;
 }

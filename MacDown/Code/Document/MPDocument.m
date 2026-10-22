@@ -133,20 +133,14 @@ NS_INLINE NSColor *MPGetWebViewBackgroundColor(WebView *webview)
         flags |= HOEDOWN_EXT_FENCED_CODE;
     if (self.extensionFootnotes)
         flags |= HOEDOWN_EXT_FOOTNOTES;
-    if (self.extensionHighlight)
-        flags |= HOEDOWN_EXT_HIGHLIGHT;
     if (!self.extensionIntraEmphasis)
         flags |= HOEDOWN_EXT_NO_INTRA_EMPHASIS;
     if (self.extensionQuote)
         flags |= HOEDOWN_EXT_QUOTE;
-    if (self.extensionStrikethough)
-        flags |= HOEDOWN_EXT_STRIKETHROUGH;
     if (self.extensionSuperscript)
         flags |= HOEDOWN_EXT_SUPERSCRIPT;
     if (self.extensionTables)
         flags |= HOEDOWN_EXT_TABLES;
-    if (self.extensionUnderline)
-        flags |= HOEDOWN_EXT_UNDERLINE;
     if (self.htmlMathJax)
         flags |= HOEDOWN_EXT_MATH;
     if (self.htmlMathJaxInlineDollar)
@@ -736,10 +730,8 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
 
     if (self.preferences.editorCompleteMatchingCharacters)
     {
-        BOOL strikethrough = self.preferences.extensionStrikethough;
         if ([textView completeMatchingCharactersForTextInRange:range
-                                                    withString:str
-                                          strikethroughEnabled:strikethrough])
+                                                    withString:str])
             return NO;
     }
     
@@ -1359,26 +1351,6 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
     [self.editor toggleForMarkupPrefix:@"`" suffix:@"`"];
 }
 
-- (IBAction)toggleStrikethrough:(id)sender
-{
-    [self.editor toggleForMarkupPrefix:@"~~" suffix:@"~~"];
-}
-
-- (IBAction)toggleUnderline:(id)sender
-{
-    [self.editor toggleForMarkupPrefix:@"_" suffix:@"_"];
-}
-
-- (IBAction)toggleHighlight:(id)sender
-{
-    [self.editor toggleForMarkupPrefix:@"==" suffix:@"=="];
-}
-
-- (IBAction)toggleComment:(id)sender
-{
-    [self.editor toggleForMarkupPrefix:@"<!--" suffix:@"-->"];
-}
-
 - (IBAction)toggleLink:(id)sender
 {
     BOOL inserted = [self.editor toggleForMarkupPrefix:@"[" suffix:@"]()"];
@@ -1446,24 +1418,6 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
 - (IBAction)unindent:(id)sender
 {
     [self.editor unindentSelectedLines];
-}
-
-- (IBAction)insertNewParagraph:(id)sender
-{
-    NSRange range = self.editor.selectedRange;
-    NSUInteger location = range.location;
-    NSUInteger length = range.length;
-    NSString *content = self.editor.string;
-    NSInteger newlineBefore = [content locationOfFirstNewlineBefore:location];
-    NSUInteger newlineAfter =
-        [content locationOfFirstNewlineAfter:location + length - 1];
-
-    // If we are on an empty line, treat as normal return key; otherwise insert
-    // two newlines.
-    if (location == newlineBefore + 1 && location == newlineAfter)
-        [self.editor insertNewline:self];
-    else
-        [self.editor insertText:@"\n\n"];
 }
 
 - (IBAction)setEditorOneQuarter:(id)sender
