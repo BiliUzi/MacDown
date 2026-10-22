@@ -225,10 +225,6 @@ NS_INLINE void treat()
     if (!self)
         return self;
 
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self selector:@selector(showFirstLaunchTips)
-                   name:MPDidDetectFreshInstallationNotification
-                 object:self.preferences];
     [self copyFiles];
     return self;
 }

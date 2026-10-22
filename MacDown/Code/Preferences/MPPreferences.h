@@ -9,9 +9,6 @@
 #import <PAPreferences/PAPreferences.h>
 
 
-extern NSString * const MPDidDetectFreshInstallationNotification;
-
-
 @interface MPPreferences : PAPreferences
 
 @property (assign) NSString *firstVersionInstalled;

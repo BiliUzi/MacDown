@@ -58,10 +58,30 @@ jobs:
       run: |
         find build -name "MacDown.app" -type d
 
+    - name: Sign and verify application
+      run: |
+        codesign --force --deep --sign - build/Build/Products/Release/MacDown.app
+        codesign --verify --deep --strict --verbose=2 build/Build/Products/Release/MacDown.app
+
+    - name: Check first launch
+      run: |
+        build/Build/Products/Release/MacDown.app/Contents/MacOS/MacDown -ApplePersistenceIgnoreState YES > "$RUNNER_TEMP/macdown-startup.log" 2>&1 &
+        app_pid=$!
+        sleep 10
+        if ! kill -0 "$app_pid" 2>/dev/null; then
+          cat "$RUNNER_TEMP/macdown-startup.log"
+          exit 1
+        fi
+        kill "$app_pid"
+        wait "$app_pid" || true
+
     - name: Create DMG
       run: |
+        mkdir dmg-stage
+        ditto build/Build/Products/Release/MacDown.app dmg-stage/MacDown.app
+        ln -s /Applications dmg-stage/Applications
         hdiutil create -volname "MacDown" \
-          -srcfolder build/Build/Products/Release/MacDown.app \
+          -srcfolder dmg-stage \
           -ov -format UDZO MacDown.dmg
 
     - name: Archive application

@@ -20,9 +20,6 @@ typedef NS_ENUM(NSUInteger, MPUnorderedListMarkerType)
 
 
 
-NSString * const MPDidDetectFreshInstallationNotification =
-    @"MPDidDetectFreshInstallationNotificationName";
-
 static NSString * const kMPDefaultEditorFontNameKey = @"name";
 static NSString * const kMPDefaultEditorFontPointSizeKey = @"size";
 static NSString * const kMPDefaultEditorFontName = @"Menlo-Regular";
@@ -54,13 +51,6 @@ static NSString * const kMPDefaultHtmlStyleName = @"GitHub2";
         self.firstVersionInstalled = version;
         [self loadDefaultPreferences];
 
-        // Post this after the initializer finishes to give others to listen
-        // to this on construction.
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-            NSNotificationCenter *c = [NSNotificationCenter defaultCenter];
-            [c postNotificationName:MPDidDetectFreshInstallationNotification
-                             object:self];
-        }];
     }
     [self loadDefaultUserDefaults];
     self.latestVersionInstalled = version;
