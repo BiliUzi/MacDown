@@ -352,6 +352,9 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
 {
     [super windowControllerDidLoadNib:controller];
 
+    if (@available(macOS 15.0, *))
+        self.toolbar.allowsDisplayModeCustomization = NO;
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     // All files use their absolute path to keep their window states.
