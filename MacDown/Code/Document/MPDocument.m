@@ -1816,6 +1816,7 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
 {
     BOOL wasVisible = self.previewVisible;
     [self.splitView setDividerLocation:ratio];
+    self.editor.editable = self.editorVisible;
     if (!wasVisible && self.previewVisible
             && !self.preferences.markdownManualRender)
         [self.renderer parseAndRenderNow];

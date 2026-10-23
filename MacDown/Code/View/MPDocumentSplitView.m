@@ -21,6 +21,10 @@
 @end
 
 
+@interface MPDocumentSplitView ()
+@property (weak) NSView *collapsedPane;
+@end
+
 @implementation MPDocumentSplitView
 
 @synthesize dividerColor = _dividerColor;
@@ -61,6 +65,13 @@
     ratio = isfinite(ratio) ? MIN(1.0, MAX(0.0, ratio)) : 0.5;
     NSView *left = parts[0];
     NSView *right = parts[1];
+    self.collapsedPane = ratio == 0.0 ? left : (ratio == 1.0 ? right : nil);
+    if (self.collapsedPane)
+    {
+        [self adjustSubviews];
+        [self setNeedsDisplay:YES];
+        return;
+    }
     left.hidden = NO;
     right.hidden = NO;
 
@@ -74,16 +85,32 @@
     right.frame = NSMakeRect(leftWidth + divider, 0.0, available - leftWidth, height);
     [self adjustSubviews];
     [self setPosition:leftWidth ofDividerAtIndex:0];
-    if (ratio == 0.0 || ratio == 1.0)
-    {
-        left.hidden = ratio == 0.0;
-        right.hidden = ratio == 1.0;
-        left.frame = NSMakeRect(0.0, 0.0, ratio == 0.0 ? 0.0 : width, height);
-        right.frame = NSMakeRect(ratio == 0.0 ? 0.0 : width, 0.0,
-                                 ratio == 1.0 ? 0.0 : width, height);
-    }
     [self setNeedsDisplay:YES];
 
+}
+
+- (void)adjustSubviews
+{
+    if (!self.collapsedPane)
+    {
+        [super adjustSubviews];
+        return;
+    }
+    // AppKit may adjust the panes again after opening or resizing the window.
+    for (NSView *pane in self.subviews)
+    {
+        pane.hidden = pane == self.collapsedPane;
+        pane.frame = NSMakeRect(0.0, 0.0, pane.hidden ? 0.0 : NSWidth(self.bounds),
+                                NSHeight(self.bounds));
+    }
+}
+
+- (void)resizeSubviewsWithOldSize:(NSSize)oldSize
+{
+    if (self.collapsedPane)
+        [self adjustSubviews];
+    else
+        [super resizeSubviewsWithOldSize:oldSize];
 }
 
 - (void)swapViews

@@ -54,6 +54,13 @@ jobs:
           CODE_SIGNING_ALLOWED=NO \
           build
 
+    - name: Check pane collapse and restoration
+      run: |
+        xcrun clang -fobjc-arc -framework Cocoa -I MacDown/Code/View \
+          MacDown/Code/View/MPDocumentSplitView.m Tools/check_split_view.m \
+          -o "$RUNNER_TEMP/check-split-view"
+        "$RUNNER_TEMP/check-split-view"
+
     - name: Locate built app
       run: |
         find build -name "MacDown.app" -type d
