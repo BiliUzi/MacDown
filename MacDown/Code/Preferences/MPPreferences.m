@@ -22,11 +22,11 @@ typedef NS_ENUM(NSUInteger, MPUnorderedListMarkerType)
 
 static NSString * const kMPDefaultEditorFontNameKey = @"name";
 static NSString * const kMPDefaultEditorFontPointSizeKey = @"size";
-static NSString * const kMPDefaultEditorFontName = @"Menlo-Regular";
+static NSString * const kMPDefaultEditorFontName = @"Futura-Medium";
 static CGFloat    const kMPDefaultEditorFontPointSize = 14.0;
-static CGFloat    const kMPDefaultEditorHorizontalInset = 15.0;
-static CGFloat    const kMPDefaultEditorVerticalInset = 30.0;
-static CGFloat    const kMPDefaultEditorLineSpacing = 3.0;
+static CGFloat    const kMPDefaultEditorHorizontalInset = 10.0;
+static CGFloat    const kMPDefaultEditorVerticalInset = 10.0;
+static CGFloat    const kMPDefaultEditorLineSpacing = 5.0;
 static BOOL       const kMPDefaultEditorSyncScrolling = YES;
 static NSString * const kMPDefaultEditorThemeName = @"Tomorrow+";
 static NSString * const kMPDefaultHtmlStyleName = @"GitHub2";
@@ -231,6 +231,10 @@ static NSString * const kMPDefaultHtmlStyleName = @"GitHub2";
     self.extensionTables = YES;
     self.extensionFencedCode = YES;
     self.extensionFootnotes = YES;
+    self.extensionAutolink = YES;
+    self.extensionSuperscript = YES;
+    self.extensionQuote = YES;
+    self.extensionSmartyPants = YES;
     self.editorBaseFontInfo = @{
         kMPDefaultEditorFontNameKey: kMPDefaultEditorFontName,
         kMPDefaultEditorFontPointSizeKey: @(kMPDefaultEditorFontPointSize),
@@ -240,7 +244,27 @@ static NSString * const kMPDefaultHtmlStyleName = @"GitHub2";
     self.editorVerticalInset = kMPDefaultEditorVerticalInset;
     self.editorLineSpacing = kMPDefaultEditorLineSpacing;
     self.editorSyncScrolling = kMPDefaultEditorSyncScrolling;
+    self.editorAutoIncrementNumberedLists = YES;
+    self.editorConvertTabs = YES;
+    self.editorInsertPrefixInBlock = YES;
+    self.editorCompleteMatchingCharacters = YES;
+    self.editorSmartHome = YES;
+    self.editorWidthLimited = YES;
+    self.editorMaximumWidth = 1000.0;
+    self.editorScrollsPastEnd = YES;
+    self.editorEnsuresNewlineAtEndOfFile = YES;
     self.htmlStyleName = kMPDefaultHtmlStyleName;
+    self.htmlTemplateName = @"Default";
+    self.htmlSyntaxHighlighting = YES;
+    self.htmlHighlightingThemeName = @"";
+    self.htmlLineNumbers = YES;
+    self.htmlGraphviz = YES;
+    self.htmlMermaid = YES;
+    self.htmlTaskList = YES;
+    self.htmlDetectFrontMatter = YES;
+    self.htmlRendersTOC = YES;
+    self.htmlHardWrap = YES;
+    self.previewZoomRelativeToBaseFontSize = YES;
     self.htmlDefaultDirectoryUrl = [NSURL fileURLWithPath:NSHomeDirectory()
                                               isDirectory:YES];
 }

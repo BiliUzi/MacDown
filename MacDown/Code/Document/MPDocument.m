@@ -272,12 +272,15 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
 
 - (BOOL)previewVisible
 {
-    return (self.preview.frame.size.width != 0.0);
+    return !self.preview.hidden && ![self.splitView isSubviewCollapsed:self.preview]
+        && NSWidth(self.preview.frame) > 0.0;
 }
 
 - (BOOL)editorVisible
 {
-    return (self.editorContainer.frame.size.width != 0.0);
+    return !self.editorContainer.hidden
+        && ![self.splitView isSubviewCollapsed:self.editorContainer]
+        && NSWidth(self.editorContainer.frame) > 0.0;
 }
 
 - (BOOL)needsHtml
@@ -355,6 +358,9 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
     NSString *autosaveName = kMPDefaultAutosaveName;
     if (self.fileURL)
         autosaveName = self.fileURL.absoluteString;
+    NSString *splitStateKey = [@"NSSplitView Subview Frames "
+                               stringByAppendingString:autosaveName];
+    BOOL firstFileOpen = self.fileURL && ![defaults objectForKey:splitStateKey];
     controller.window.frameAutosaveName = autosaveName;
     self.autosaveName = autosaveName;
 
@@ -445,6 +451,15 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
         [self setupEditor:nil];
         [self redrawDivider];
         [self reloadFromLoadedString];
+        if (firstFileOpen)
+        {
+            // Use the screen's work area, preserving the title bar as in reading mode.
+            NSScreen *screen = controller.window.screen ?: [NSScreen mainScreen];
+            if (screen)
+                [controller.window setFrame:screen.visibleFrame display:YES];
+            self.previousSplitRatio = 0.5;
+            [self setSplitViewDividerLocation:self.preferences.editorOnRight ? 1.0 : 0.0];
+        }
     }];
 }
 
@@ -656,7 +671,7 @@ static void (^MPGetPreviewLoadingCompletionHandler(MPDocument *doc))()
     else if (action == @selector(togglePreviewPane:))
     {
         NSMenuItem *it = ((NSMenuItem *)item);
-        it.hidden = (!self.previewVisible && self.previousSplitRatio < 0.0);
+        it.hidden = NO;
         it.title = self.previewVisible ?
             NSLocalizedString(@"Hide Preview Pane",
                               @"Toggle preview pane menu item") :

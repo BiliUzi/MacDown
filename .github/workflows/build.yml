@@ -72,6 +72,24 @@ jobs:
           cat "$RUNNER_TEMP/macdown-startup.log"
           exit 1
         fi
+        defaults export io.github.biliuzi.MacDown "$RUNNER_TEMP/macdown-defaults.plist"
+        python3 - "$RUNNER_TEMP/macdown-defaults.plist" <<'PY'
+        import plistlib, sys
+        with open(sys.argv[1], 'rb') as stream:
+            prefs = plistlib.load(stream)
+        assert prefs['editorBaseFontInfo'] == {'name': 'Futura-Medium', 'size': 14}
+        assert prefs['editorHorizontalInset'] == prefs['editorVerticalInset'] == 10
+        assert prefs['editorLineSpacing'] == 5
+        assert prefs['editorMaximumWidth'] == 1000
+        assert prefs['htmlStyleName'] == 'GitHub2'
+        for key in ('extensionAutolink', 'extensionSuperscript', 'extensionQuote',
+                    'extensionSmartyPants', 'editorWidthLimited', 'editorConvertTabs',
+                    'editorCompleteMatchingCharacters', 'editorScrollsPastEnd',
+                    'htmlSyntaxHighlighting', 'htmlLineNumbers', 'htmlGraphviz',
+                    'htmlMermaid', 'htmlTaskList', 'htmlDetectFrontMatter',
+                    'htmlRendersTOC', 'htmlHardWrap', 'previewZoomRelativeToBaseFontSize'):
+            assert prefs[key], key
+        PY
         kill "$app_pid"
         wait "$app_pid" || true
 
