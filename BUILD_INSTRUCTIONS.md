@@ -8,7 +8,7 @@
 
 ## 本机构建
 
-在项目目录执行：
+先按 GitHub Actions 中固定的版本获取 Prism 到 `Dependency/prism`，再在项目目录执行：
 
 ```bash
 pod install
@@ -21,8 +21,14 @@ xcodebuild -workspace MacDown.xcworkspace -scheme MacDown \
 
 ## 发布签名
 
-当前工作流生成未签名构建。公开分发前建议配置 Developer ID 签名和 Apple 公证；这需要开发者证书、团队 ID 及 Apple 公证凭据，仓库当前没有这些凭据，因此工作流不会尝试伪造签名或公证状态。
+当前工作流使用 ad-hoc 签名并验证应用完整性，尚未配置 Developer ID 签名和 Apple 公证。公开分发前建议配置 Developer ID 签名和 Apple 公证；这需要开发者证书、团队 ID 及 Apple 公证凭据，仓库当前没有这些凭据，因此工作流不会尝试伪造签名或公证状态。
 
 ## 项目功能
 
 保留 Markdown 编辑、HTML 预览、代码高亮和主题。预览只加载本地资源，不访问远程资源或打开外部链接。
+
+## 安装和发布
+
+从 [Releases](https://github.com/BiliUzi/MacDown/releases/latest) 下载 `MacDown.dmg`，打开后把 MacDown 拖入应用程序文件夹。
+
+发布前先更新 `MacDown/MacDown-Info.plist` 中的版本号和构建号，再创建并推送对应的 `v*` 标签。构建、检查和安装包生成步骤以 `.github/workflows/build.yml` 为准。
