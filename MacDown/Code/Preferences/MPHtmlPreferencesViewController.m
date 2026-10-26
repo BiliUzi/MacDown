@@ -57,13 +57,7 @@ NS_INLINE NSString *MPPrismDefaultThemeName()
 
 - (IBAction)changeStylesheet:(NSPopUpButton *)sender
 {
-    NSString *title = sender.selectedItem.title;
-
-    // Special case: the first (empty) item. No stylesheets will be used.
-    if (!title.length)
-        self.preferences.htmlStyleName = nil;
-    else
-        self.preferences.htmlStyleName = title;
+    self.preferences.htmlStyleName = kMPDefaultHtmlStyleName;
 }
 
 - (IBAction)changeHighlightingTheme:(NSPopUpButton *)sender
@@ -108,17 +102,7 @@ NS_INLINE NSString *MPPrismDefaultThemeName()
     self.stylesheetSelect.enabled = NO;
     [self.stylesheetSelect removeAllItems];
 
-    NSArray *itemTitles = MPListEntriesForDirectory(
-        kMPStylesDirectoryName,
-        MPFileNameHasExtensionProcessor(kMPStyleFileExtension)
-    );
-
-    [self.stylesheetSelect addItemWithTitle:@""];
-    [self.stylesheetSelect addItemsWithTitles:itemTitles];
-
-    NSString *title = self.preferences.htmlStyleName;
-    if (title.length)
-        [self.stylesheetSelect selectItemWithTitle:title];
+    [self.stylesheetSelect addItemWithTitle:kMPDefaultHtmlStyleName];
 
     self.stylesheetSelect.enabled = YES;
 }

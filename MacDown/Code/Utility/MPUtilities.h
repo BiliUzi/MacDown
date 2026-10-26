@@ -16,13 +16,6 @@ extern NSString * const kMPThemeFileExtension;
 NSString *MPDataDirectory(NSString *relativePath);
 NSString *MPPathToDataFile(NSString *name, NSString *dirPath);
 
-NSArray *MPListEntriesForDirectory(
-    NSString *dirName, NSString *(^processor)(NSString *absolutePath)
-);
-
-// Block factory for MPListEntriesForDirectory
-NSString *(^MPFileNameHasExtensionProcessor(NSString *ext))(NSString *path);
-
 BOOL MPCharacterIsWhitespace(unichar character);
 BOOL MPCharacterIsNewline(unichar character);
 BOOL MPStringIsNewline(NSString *str);

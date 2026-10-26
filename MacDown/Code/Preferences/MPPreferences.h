@@ -8,6 +8,9 @@
 
 #import <PAPreferences/PAPreferences.h>
 
+extern NSString * const kMPDefaultEditorThemeName;
+extern NSString * const kMPDefaultHtmlStyleName;
+
 
 @interface MPPreferences : PAPreferences
 

@@ -28,8 +28,8 @@ static CGFloat    const kMPDefaultEditorHorizontalInset = 10.0;
 static CGFloat    const kMPDefaultEditorVerticalInset = 10.0;
 static CGFloat    const kMPDefaultEditorLineSpacing = 5.0;
 static BOOL       const kMPDefaultEditorSyncScrolling = YES;
-static NSString * const kMPDefaultEditorThemeName = @"Tomorrow+";
-static NSString * const kMPDefaultHtmlStyleName = @"GitHub2";
+NSString * const kMPDefaultEditorThemeName = @"Solarized (Light)+";
+NSString * const kMPDefaultHtmlStyleName = @"GitHub2-Elegant";
 
 
 @implementation MPPreferences
@@ -53,6 +53,8 @@ static NSString * const kMPDefaultHtmlStyleName = @"GitHub2";
 
     }
     [self loadDefaultUserDefaults];
+    self.editorStyleName = kMPDefaultEditorThemeName;
+    self.htmlStyleName = kMPDefaultHtmlStyleName;
     self.latestVersionInstalled = version;
     return self;
 }

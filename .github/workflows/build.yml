@@ -26,21 +26,14 @@ jobs:
         ref: bd479f1d5ff0855b4c50168c1a82c91b2db191f2
         path: Dependency/prism
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '22'
-
     - name: Install CocoaPods
       run: brew list cocoapods >/dev/null 2>&1 || brew install cocoapods
 
     - name: Install pods
       run: pod install
 
-    - name: Generate styles and Markdown parser
+    - name: Generate Markdown parser
       run: |
-        npm ci --prefix Tools/GitHub-style-generator
-        make -C Tools/GitHub-style-generator
         make -C Dependency/peg-markdown-highlight -j$(sysctl -n hw.ncpu)
 
     - name: Build MacDown
@@ -65,6 +58,22 @@ jobs:
       run: |
         find build -name "MacDown.app" -type d
 
+    - name: Check retained theme resources
+      run: |
+        python3 - <<'PY'
+        from pathlib import Path
+        import hashlib
+        resources = Path('build/Build/Products/Release/MacDown.app/Contents/Resources')
+        expected = {
+            'Themes': ('Solarized (Light)+.style', '30751252517c8d159fbc8c30af5387199c96bdb5b86a817f0f9bfc07d52212a4'),
+            'Styles': ('GitHub2-Elegant.css', 'e8eae58e7ac4e4bd7c5ce4ed14f3c7191f8ff61d87d50c8ae3bf95bbf1fc0419'),
+        }
+        for directory, (name, digest) in expected.items():
+            folder = resources / directory
+            assert sorted(p.name for p in folder.iterdir()) == [name], directory
+            assert hashlib.sha256((folder / name).read_bytes()).hexdigest() == digest, name
+        PY
+
     - name: Sign and verify application
       run: |
         codesign --force --deep --sign - build/Build/Products/Release/MacDown.app
@@ -88,7 +97,8 @@ jobs:
         assert prefs['editorHorizontalInset'] == prefs['editorVerticalInset'] == 10
         assert prefs['editorLineSpacing'] == 5
         assert prefs['editorMaximumWidth'] == 1000
-        assert prefs['htmlStyleName'] == 'GitHub2'
+        assert prefs['editorStyleName'] == 'Solarized (Light)+'
+        assert prefs['htmlStyleName'] == 'GitHub2-Elegant'
         for key in ('extensionAutolink', 'extensionSuperscript', 'extensionQuote',
                     'extensionSmartyPants', 'editorWidthLimited', 'editorConvertTabs',
                     'editorCompleteMatchingCharacters', 'editorScrollsPastEnd',

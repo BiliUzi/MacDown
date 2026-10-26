@@ -45,43 +45,6 @@ NSString *MPPathToDataFile(NSString *name, NSString *dirPath)
                                           name]];
 }
 
-NSArray *MPListEntriesForDirectory(
-    NSString *dirName, NSString *(^processor)(NSString *absolutePath))
-{
-    NSString *dirPath = MPDataDirectory(dirName);
-
-    NSError *error = nil;
-    NSFileManager *manager = [NSFileManager defaultManager];
-    NSArray *fileNames = [manager contentsOfDirectoryAtPath:dirPath
-                                                      error:&error];
-    if (error || !fileNames.count)
-        return @[];
-
-    NSMutableArray *items = [[NSMutableArray alloc] init];
-    for (NSString *fileName in fileNames)
-    {
-        NSString *item = [NSString pathWithComponents:@[dirPath, fileName]];
-        if (processor)
-            item = processor(item);
-        if (item)
-            [items addObject:item];
-    }
-    return [items copy];
-}
-
-NSString *(^MPFileNameHasExtensionProcessor(NSString *ext))(NSString *path)
-{
-    id block = ^(NSString *absPath) {
-        NSFileManager *manager = [NSFileManager defaultManager];
-        NSString *name = absPath.lastPathComponent;
-        NSString *processed = nil;
-        if ([name hasExtension:ext] && [manager fileExistsAtPath:absPath])
-            processed = name.stringByDeletingPathExtension;
-        return processed;
-    };
-    return block;
-}
-
 BOOL MPCharacterIsWhitespace(unichar character)
 {
     static NSCharacterSet *whitespaces = nil;

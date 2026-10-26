@@ -67,17 +67,7 @@ NSString * const MPDidRequestEditorSetupNotificationKeyName =
     [self.themeSelect setEnabled:NO];
     [self.themeSelect removeAllItems];
 
-    NSArray *itemTitles = MPListEntriesForDirectory(
-        kMPThemesDirectoryName,
-        MPFileNameHasExtensionProcessor(kMPThemeFileExtension)
-    );
-
-    [self.themeSelect addItemWithTitle:@""];
-    [self.themeSelect addItemsWithTitles:itemTitles];
-
-    NSString *title = [self.preferences.editorStyleName copy];
-    if (title.length)
-        [self.themeSelect selectItemWithTitle:title];
+    [self.themeSelect addItemWithTitle:kMPDefaultEditorThemeName];
 
     [self.themeSelect setEnabled:YES];
 }
@@ -119,13 +109,7 @@ NSString * const MPDidRequestEditorSetupNotificationKeyName =
 
 - (IBAction)changeTheme:(NSPopUpButton *)sender
 {
-    NSString *title = sender.selectedItem.title;
-
-    // Special case: the first (empty) item. No stylesheets will be used.
-    if (!title.length)
-        self.preferences.editorStyleName = nil;
-    else
-        self.preferences.editorStyleName = title;
+    self.preferences.editorStyleName = kMPDefaultEditorThemeName;
 }
 
 - (IBAction)invokeStylesheetFunction:(NSSegmentedControl *)sender

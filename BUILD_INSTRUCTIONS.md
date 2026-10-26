@@ -4,7 +4,7 @@
 
 - 仅支持 Apple 芯片（arm64）。
 - 最低系统版本为 macOS 12。
-- 本机构建需要 Xcode、CocoaPods、Node.js 和项目里的构建工具。
+- 本机构建需要 Xcode、CocoaPods 和项目里的构建工具。
 
 ## 本机构建
 
@@ -12,8 +12,6 @@
 
 ```bash
 pod install
-npm ci --prefix Tools/GitHub-style-generator
-make -C Tools/GitHub-style-generator
 make -C Dependency/peg-markdown-highlight -j"$(sysctl -n hw.ncpu)"
 xcodebuild -workspace MacDown.xcworkspace -scheme MacDown \
   -configuration Release -arch arm64 CODE_SIGNING_ALLOWED=NO build
